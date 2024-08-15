@@ -1,6 +1,6 @@
 import { integer, text, sqliteTableCreator } from "drizzle-orm/sqlite-core";
 
-export const accountTypeEnum = ["email", "google", "github"] as const;
+export const accountTypeEnum = ["email", "google"] as const;
 
 const sqliteTable = sqliteTableCreator((name) => `app_${name}`);
 
@@ -17,7 +17,6 @@ export const accounts = sqliteTable("accounts", {
     .unique()
     .notNull(),
   accountType: text("account_type", { enum: accountTypeEnum }).notNull(),
-  githubId: text("github_id").unique(),
   googleId: text("google_id").unique(),
   password: text("password"),
   salt: text("salt"),

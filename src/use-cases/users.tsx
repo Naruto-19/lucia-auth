@@ -8,13 +8,11 @@ import {
 import { UserId, UserSession } from "@/use-cases/types";
 import {
   createAccount,
-  createAccountViaGithub,
   createAccountViaGoogle,
   updatePassword,
 } from "@/data-access/accounts";
 import { createProfile, getProfile } from "@/data-access/profiles";
 import { GoogleUser } from "@/app/api/login/google/callback/route";
-import { GitHubUser } from "@/app/api/login/github/callback/route";
 import {
   createPasswordResetToken,
   deletePasswordResetToken,
@@ -94,20 +92,6 @@ export async function signInUseCase(email: string, password: string) {
   }
 
   return { id: user.id };
-}
-
-export async function createGithubUserUseCase(githubUser: GitHubUser) {
-  let existingUser = await getUserByEmail(githubUser.email);
-
-  if (!existingUser) {
-    existingUser = await createUser(githubUser.email);
-  }
-
-  await createAccountViaGithub(existingUser.id, githubUser.id);
-
-  await createProfile(existingUser.id, githubUser.login, githubUser.avatar_url);
-
-  return existingUser.id;
 }
 
 export async function createGoogleUserUseCase(googleUser: GoogleUser) {

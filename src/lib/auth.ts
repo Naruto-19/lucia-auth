@@ -1,4 +1,4 @@
-import { GitHub, Google } from "arctic";
+import { Google } from "arctic";
 import { Lucia } from "lucia";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 import { db } from "@/db";
@@ -69,11 +69,6 @@ declare module "lucia" {
     UserId: CustomUserId;
   }
 }
-
-export const github = new GitHub(
-  env.GITHUB_CLIENT_ID,
-  env.GITHUB_CLIENT_SECRET,
-);
 
 export const googleAuth = new Google(
   env.GOOGLE_CLIENT_ID,

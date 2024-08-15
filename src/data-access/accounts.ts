@@ -37,18 +37,6 @@ export async function createAccount(userId: UserId, password: string) {
   return account;
 }
 
-export async function createAccountViaGithub(userId: UserId, githubId: string) {
-  await db
-    .insert(accounts)
-    .values({
-      userId: userId,
-      accountType: "github",
-      githubId,
-    })
-    .onConflictDoNothing()
-    .returning();
-}
-
 export async function createAccountViaGoogle(userId: UserId, googleId: string) {
   await db
     .insert(accounts)
@@ -91,8 +79,3 @@ export async function getAccountByGoogleId(googleId: string) {
   });
 }
 
-export async function getAccountByGithubId(githubId: string) {
-  return await db.query.accounts.findFirst({
-    where: eq(accounts.githubId, githubId),
-  });
-}
